@@ -1,0 +1,13 @@
+html,
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  height: 100%;
+  font-size: 0.9rem;
+  line-height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  overflow: hidden;
+  background-color: grey;
+}
