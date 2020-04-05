@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./Join.css";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import Menu from "godspeed/build/Menu";
 
 const Join = () => {
+  const [menu, setMenu] = useState(false);
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [rooms, setRooms] = useState([]);
@@ -11,15 +13,10 @@ const Join = () => {
   const history = useHistory();
 
   const joinRoom = (e) => {
-    if (!name && !room) {
-      try {
-      } catch (error) {
-        console.log(error);
-      }
-      return;
-    }
     e.preventDefault();
-    history.push(`/chat?name=${name}&room=${room}`);
+    if (name && room) {
+      history.push(`/chat?name=${name}&room=${room}`);
+    }
   };
 
   useEffect(() => {
@@ -37,38 +34,34 @@ const Join = () => {
   return (
     <div className="landingPage">
       <div className="joinContainer">
-        <h3 className="jointitle">Join a Chatroom!</h3>
         <form onSubmit={(e) => joinRoom(e)}>
+          <h1>Nickname</h1>
+          <input
+            className="joininput"
+            placeholder="Nickname"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <h1>Create room</h1>
+          <input
+            className="joininput"
+            placeholder="Room Name"
+            value={room}
+            onChange={(e) => setRoom(e.target.value)}
+          />
           <div>
-            <input
-              className="joininput"
-              placeholder="Name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></input>
+            <button className="joinbutton" onClick={(e) => joinRoom(e)}>
+              Join
+            </button>
           </div>
-          <div>
-            <input
-              className="joininput"
-              placeholder="Room"
-              type="text"
-              value={room}
-              onChange={(e) => setRoom(e.target.value)}
-            ></input>
-          </div>
-          <select name="" id="">
-            <option value="Available Rooms" disabled selected>
-              Rooms
-            </option>
-            {rooms.map((room) => (
-              <option onClick={() => joinRoom(room)} value={room}>
-                {room}
-              </option>
-            ))}
-          </select>
-          <input className="joinbutton" type="submit" value="Join" />
         </form>
+        <h1>Existing Rooms</h1>
+        <select className="room-menu" onClick={(e) => setRoom(e.target.value)}>
+          <option disabled selected></option>
+          {rooms.map((room) => (
+            <option value={room}>{room}</option>
+          ))}
+        </select>
       </div>
     </div>
   );

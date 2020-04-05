@@ -33,3 +33,8 @@
   background-color: rgba(0, 94, 255, 1);
   cursor: pointer;
 }
+
+.room-menu {
+  width: 100%;
+  padding: 5px;
+}
