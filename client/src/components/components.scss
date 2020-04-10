@@ -1,0 +1,182 @@
+@mixin flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+$main: rgb(200, 200, 200);
+$secondary: rgba(177, 205, 228, 0.801);
+$accent: linear-gradient(
+  320deg,
+  rgba(40, 69, 104, 1) 0%,
+  rgba(50, 81, 120, 1) 34%,
+  rgba(48, 79, 117, 1) 45%,
+  rgba(40, 69, 104, 1) 100%
+);
+$third: rgba(54, 104, 148, 0.801);
+
+$user-bubble: rgb(255, 255, 255);
+$chat: rgb(148, 143, 143);
+
+//JOIN PAGE
+.home-page {
+  @include flex;
+  width: 100%;
+  height: 100%;
+  .card {
+    $text: black;
+    background-color: $secondary;
+    h1 {
+      text-align: center;
+      color: $text;
+    }
+    .inputs {
+      display: flex;
+      margin: 20px 0px;
+      * {
+        font-size: 0.9rem;
+      }
+      input:focus::placeholder {
+        color: transparent;
+        transition: all 0.1s;
+      }
+      input::placeholder,
+      input {
+        color: $text;
+      }
+      input:first-child {
+        margin-right: 10px;
+      }
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      button {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+.modal {
+  h1 {
+    padding-bottom: 10px;
+  }
+  .rooms {
+    @include flex;
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+//CHAT ROOM
+
+.chat-room {
+  @include flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: $main;
+  border: 2px solid black;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px black;
+  min-width: 900px;
+  max-width: 900px;
+  .head {
+    @include flex;
+    width: 100%;
+    padding: 10px 10px;
+    color: white;
+    background: $third;
+  }
+  .room {
+    flex: 1;
+    width: 100%;
+    @include flex;
+    align-items: stretch;
+    flex-direction: row;
+    .chat,
+    .side {
+      margin: 10px;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    .chat {
+      flex: 1;
+      height: 70vh;
+      position: relative;
+      margin-right: 0px;
+      overflow: hidden;
+      background-color: $chat;
+      .messages {
+        padding-right: 10px;
+        overflow: scroll;
+        height: 98%;
+        .bubble {
+          width: fit-content;
+          padding: 5px 10px;
+          margin: 5px 0;
+          font-size: 1.1rem;
+          border-radius: 5px;
+          word-break: break-word;
+        }
+      }
+      .typing {
+        position: absolute;
+        bottom: 10px;
+        color: white;
+      }
+    }
+    .side {
+      flex: 0.4;
+      background: $third;
+      h1 {
+        color: white;
+        padding-bottom: 10px;
+      }
+      .users {
+        div {
+          width: 100%;
+          padding-left: 5px;
+          padding: 5px;
+          margin: 5px 0;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background-color: $user-bubble;
+        }
+        .button {
+          * {
+            font-size: 0.8rem;
+          }
+          padding: 5px 10px;
+        }
+      }
+    }
+  }
+  .foot {
+    @include flex;
+    justify-content: space-between;
+    padding: 10px;
+    width: 100%;
+    background: $third;
+    .form {
+      flex: 1;
+      padding-right: 25px;
+      input::placeholder {
+        color: rgb(20, 20, 20);
+        font-weight: 500;
+      }
+      input {
+        width: 100%;
+        margin-right: 10px;
+        word-break: break-word;
+      }
+    }
+    .leave {
+      display: flex;
+      justify-content: flex-end;
+      padding-left: 10px;
+      flex: 0.4;
+    }
+  }
+}
