@@ -89,6 +89,7 @@ io.on("connection", (socket) => {
   socket.on("notTyping", (user) => {
     console.log(userName, "stopped typing");
     io.to(roomName).emit("notTyping", userName);
+  })
 
   socket.on("privateMessage", ({ receiver, message }) => {
     console.log("receiver: ", receiver);
