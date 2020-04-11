@@ -6,17 +6,9 @@
 
 $main: rgb(200, 200, 200);
 $secondary: rgba(177, 205, 228, 0.801);
-$accent: linear-gradient(
-  320deg,
-  rgba(40, 69, 104, 1) 0%,
-  rgba(50, 81, 120, 1) 34%,
-  rgba(48, 79, 117, 1) 45%,
-  rgba(40, 69, 104, 1) 100%
-);
-$third: rgba(54, 104, 148, 0.801);
-
+$accent: linear-gradient(320deg,rgba(40, 69, 104, 1) 0%,rgba(50, 81, 120, 1) 34%,rgba(48, 79, 117, 1) 45%,rgba(40, 69, 104, 1) 100%);
 $user-bubble: rgb(255, 255, 255);
-$chat: rgb(148, 143, 143);
+$chat: rgb(99, 99, 99);
 
 //JOIN PAGE
 .home-page {
@@ -67,6 +59,14 @@ $chat: rgb(148, 143, 143);
     margin: 10px 0;
   }
 }
+.bubble {
+  width: fit-content;
+  padding: 5px 10px;
+  margin: 5px 0;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  word-break: break-word;
+}
 
 //CHAT ROOM
 
@@ -85,7 +85,7 @@ $chat: rgb(148, 143, 143);
     width: 100%;
     padding: 10px 10px;
     color: white;
-    background: $third;
+    background: $accent;
   }
   .room {
     flex: 1;
@@ -110,14 +110,6 @@ $chat: rgb(148, 143, 143);
         padding-right: 10px;
         overflow: scroll;
         height: 98%;
-        .bubble {
-          width: fit-content;
-          padding: 5px 10px;
-          margin: 5px 0;
-          font-size: 1.1rem;
-          border-radius: 5px;
-          word-break: break-word;
-        }
       }
       .typing {
         position: absolute;
@@ -127,7 +119,7 @@ $chat: rgb(148, 143, 143);
     }
     .side {
       flex: 0.4;
-      background: $third;
+      background: $accent;
       h1 {
         color: white;
         padding-bottom: 10px;
@@ -135,6 +127,7 @@ $chat: rgb(148, 143, 143);
       .users {
         div {
           width: 100%;
+          min-height: 35px;
           padding-left: 5px;
           padding: 5px;
           margin: 5px 0;
@@ -158,7 +151,7 @@ $chat: rgb(148, 143, 143);
     justify-content: space-between;
     padding: 10px;
     width: 100%;
-    background: $third;
+    background: $accent;
     .form {
       flex: 1;
       padding-right: 25px;
@@ -177,6 +170,42 @@ $chat: rgb(148, 143, 143);
       justify-content: flex-end;
       padding-left: 10px;
       flex: 0.4;
+    }
+  }
+}
+
+.private-messages{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  right: 2vw;
+  min-width: 300px;
+  z-index: 10000;
+  background-color: $main;
+  .head, .body, .foot{width: 100%;}
+  .head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    img{
+      width: 25px;
+      height:15px;
+      cursor: pointer;
+      filter: invert(1);
+    }
+    .down{transform: rotate(180deg);}
+  }
+  .body{
+    flex: 1;
+    color: white;
+    background-color: $chat;
+  }
+  .foot{
+    input{
+      width: 100%;
+      margin-bottom: 5px;
     }
   }
 }

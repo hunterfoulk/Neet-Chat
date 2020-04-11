@@ -10,7 +10,7 @@ const App = () => (
     <div className="App">
       <Route path='/' exact component={Join} />
       <Route path='/chat' component={Chat} />
-      <img src={landing} alt="" />
+      <img className="bg-texture" src={landing} alt="" />
     </div>
   </Router>
 )

@@ -7,18 +7,19 @@ import Button from "godspeed/build/Button";
 import Input from "godspeed/build/Input";
 import Modal from "godspeed/build/Modal";
 import axios from "axios";
+import Messenger from './messenger';
 
 const Chat = ({ location }) => {
   const ENDPOINT = "localhost:5000";
   const socket = useRef({});
   const messagesEndRef = useRef(null);
-  const [PMS, openPMS] = useState(false);
+  const [messenger, openMessenger] = useState(true);
   const [name, setName] = useState("");
   const [users, setUsers] = useState([]);
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
-  const [privateMessage, setPrivateMEssage] = useState("placeholder message");
-  const [messages, setMessages] = useState([]);
+  const [privateMessage, setPrivateMessage] = useState("test");
+  const [chatMessages, setChatMessages] = useState([]);
   const [typers, setTypers] = useState([]);
   const [privateRooms, setPrivateRooms] = useState([]);
 
@@ -40,13 +41,13 @@ const Chat = ({ location }) => {
     });
 
     socket.current.on("newMessage", (message) => {
-      setMessages((msgs) => [...msgs, message]);
+      setChatMessages((msgs) => [...msgs, message]);
       messagesEndRef.current.scrollIntoView();
     });
 
     socket.current.on("updateUsers", (updatedUsers) => {
       setUsers(updatedUsers);
-      console.log("updated users:", updatedUsers);
+      // console.log("updated users:", updatedUsers);
     });
 
     socket.current.on("typing", (name) => {
@@ -99,13 +100,13 @@ const Chat = ({ location }) => {
   }, []);
 
   useEffect(() => {
-    console.log(privateRooms);
+    privateRooms.length > 0 && console.log(privateRooms);
   }, [privateRooms]);
 
   // PRIVATE MESSAGE
   const openPrivateMessage = (receiver) => {
-    socket.current.emit("privateMessage", { receiver, message: "test" });
-    console.log("receiver:", receiver);
+    socket.current.emit("privateMessage", { receiver, message: privateMessage });
+    // console.log("receiver:", receiver);
   };
 
   const handleInputSubmit = (e) => {
@@ -151,15 +152,7 @@ const Chat = ({ location }) => {
 
   return (
     <>
-      {/* <Modal className="modal" onClick={() => openPMS(!PMS)} open={PMS}>
-        <Input
-          placeholder="Type a message"
-          onChange={(e) => setPrivateMEssage(e.target.value)}
-          value={privateMessage}
-          autoFocus
-        />
-
-      </Modal> */}
+      <Messenger messenger={messenger} openMessenger={openMessenger} privateRooms={privateRooms} privateMessage={privateMessage} setPrivateMessage={setPrivateMessage} />
       <div className="chat-room">
         <div className="head">
           <h1>Welcome to {room}</h1>
@@ -168,7 +161,7 @@ const Chat = ({ location }) => {
           <div className="chat">
             <div className="messages">
               <ul>
-                {messages.map((message, index) => (
+                {chatMessages.map((message, index) => (
                   <div
                     className="bubble"
                     key={index}
@@ -196,30 +189,18 @@ const Chat = ({ location }) => {
               {users.map((user) => (
                 <div key={user.socketId}>
                   {user.name}
-                  <Button
-                    onClick={() => {
-                      openPMS(true);
-                      openPrivateMessage(user);
-                    }}
-                    className="button"
-                    text="Message"
-                  />
+                  {user.name !== name &&
+                    <Button
+                      onClick={() => {
+                        openMessenger(true);
+                        openPrivateMessage(user);
+                      }}
+                      className="button"
+                      text="Message"
+                    />
+                  }
                 </div>
               ))}
-            </div>
-            <div className="pms">
-              <div className="tab">
-                <h1>name</h1>
-              </div>
-              <div className="tab">
-                <h1>name</h1>
-              </div>
-              <div className="tab">
-                <h1>name</h1>
-              </div>
-              <div className="tab">
-                <h1>name</h1>
-              </div>
             </div>
           </div>
         </div>
