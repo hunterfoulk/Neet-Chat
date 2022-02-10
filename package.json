@@ -13,6 +13,6 @@
   "dependencies": {
     "concurrently": "^5.0.0",
     "godspeed": "^1.3.41",
-    "node-sass": "^4.13.1"
+    "node-sass": "^7.0.0"
   }
 }
